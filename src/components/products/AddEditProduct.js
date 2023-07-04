@@ -11,6 +11,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
+import "./Products.css"
 
 function AddEditProduct() {
     const { authToken, isAdmin } = useContext(AuthContext);
@@ -44,9 +45,8 @@ function AddEditProduct() {
                 setCategoryList(response.data);
             })
             .catch(function (error) {
-                console.log(error);
+                alert("Error: There was an issue in retrieving categories list.");
             });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -62,7 +62,6 @@ function AddEditProduct() {
                     const data = response.data;
                     setName(data.name);
                     const categoryName = data.category;
-                    console.log(categoryName);
                     setCategory({ label: categoryName, value: categoryName });
                     setManufacturer(data.manufacturer);
                     setAvailableItems(data.availableItems);
@@ -70,7 +69,9 @@ function AddEditProduct() {
                     setImageUrl(data.imageUrl);
                     setProductDescription(data.description);
                 })
-                .catch((error) => console.error("Error fetching data:", error))
+                .catch(() =>
+                    alert("Error: There was an issue in retrieving product details.")
+                )
                 .finally(() => setDataLoading(false));
         }
     }, [isEditMode, id, authToken]);
@@ -116,12 +117,12 @@ function AddEditProduct() {
                             },
                         }
                     )
-                    .then(function (response) {
+                    .then(function () {
                         alert(`Product ${name} modified successfully!`);
                         navigate("/products");
                     })
-                    .catch(function (error) {
-                        console.log(error);
+                    .catch(function () {
+                        alert(`Error: There was an issue is modifying product ${name}.`);
                     });
             } else {
                 axios
@@ -142,12 +143,12 @@ function AddEditProduct() {
                             },
                         }
                     )
-                    .then(function (response) {
+                    .then(function () {
                         alert(`Product ${name} added successfully!`);
                         navigate("/products");
                     })
-                    .catch(function (error) {
-                        console.log(error);
+                    .catch(function () {
+                        alert(`Error: There was an issue in adding product: ${name}.`);
                     });
             }
         }
@@ -156,15 +157,7 @@ function AddEditProduct() {
     return (
         <div>
             <NavigationBar isLogged={authToken !== null} isAdmin={isAdmin} />
-            <div
-                style={{
-                    width: "350px",
-                    padding: "10px 20px",
-                    margin: "40px auto",
-                    height: "100%",
-                    textAlign: "center",
-                }}
-            >
+            <div className="addEditContainer">
                 {dataLoading ? (
                     <Box sx={{ display: "flex" }}>
                         <CircularProgress />
@@ -191,6 +184,7 @@ function AddEditProduct() {
                                 classNamePrefix="select"
                                 name="category"
                                 isClearable
+                                required
                                 options={categoryList.map((item) => ({
                                     label: item,
                                     value: item,

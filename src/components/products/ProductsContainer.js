@@ -15,6 +15,7 @@ import { itemsList } from "../../common/mock";
 import axios from "axios";
 import { AuthContext } from "../../common/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "./Products.css"
 
 function ProductsContainer() {
     const [category, setCategory] = useState("all");
@@ -29,6 +30,18 @@ function ProductsContainer() {
 
     const triggerDataFetch = () => {
         if (authToken !== null) {
+            axios
+                .get("http://localhost:8080/api/products/categories", {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                })
+                .then(function (response) {
+                    setCategoryList(response.data);
+                })
+                .catch(function () {
+                    alert("Error: There was an issue in retrieving categories list.");
+                });
             axios
                 .get("http://localhost:8080/api/products", {
                     headers: {
@@ -70,7 +83,6 @@ function ProductsContainer() {
                 )
             );
         } else {
-            console.log("entered");
             setData(temp);
         }
         setSortBy(keyString);
@@ -95,8 +107,10 @@ function ProductsContainer() {
                 .then(function () {
                     triggerDataFetch();
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(function () {
+                    alert(
+                        `Error: There was an issue in deleting product, please try again later.`
+                    );
                 });
         }
     };
@@ -111,15 +125,8 @@ function ProductsContainer() {
             />
 
             {originalData.length > 0 ? (
-                <div
-                    style={{
-                        width: "1200px",
-                        padding: "10px 20px",
-                        margin: "20px auto",
-                        height: "100%",
-                    }}
-                >
-                    <div style={{ marginBottom: 30, textAlign: "center" }}>
+                <div className="productsContainer">
+                    <div className="categorySectionStyle">
                         <ToggleButtonGroup
                             color="primary"
                             value={category}
@@ -138,7 +145,7 @@ function ProductsContainer() {
                     </div>
 
                     <div>
-                        <FormControl style={{ minWidth: 150, maxWidth: 250 }}>
+                        <FormControl className="sortByDropdown">
                             <InputLabel id="sort-select-label">Sort By</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
