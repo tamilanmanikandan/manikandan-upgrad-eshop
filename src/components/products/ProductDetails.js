@@ -120,6 +120,11 @@ function ProductDetail() {
                                 color="primary"
                                 type="button"
                                 sx={{ mt: 2 }}
+                                onClick={() =>
+                                    navigate("/order", {
+                                        state: { ...product, quantity: quantity },
+                                    })
+                                }
                             >
                                 Place Order
                             </Button>

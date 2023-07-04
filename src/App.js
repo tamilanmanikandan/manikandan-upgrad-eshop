@@ -5,6 +5,8 @@ import Signup from "./components/signup/Signup";
 import ProductsContainer from "./components/products/ProductsContainer";
 import { AuthContextProvider } from "./common/AuthContext";
 import ProductDetail from "./components/products/ProductDetails";
+import Order from "./components/order/Order";
+
 const appTheme = createTheme({
   palette: {
     primary: {
@@ -27,6 +29,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/products" element={<ProductsContainer />} />
             <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/order" element={<Order />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
