@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import NavigationBar from "../navigation/NavigationBar";
 import { Avatar, Button, TextField, Typography } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../common/AuthContext";
 
 function Login() {
     const navigate = useNavigate();
@@ -10,6 +12,7 @@ function Login() {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const { authToken, setToken } = useContext(AuthContext);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,9 +29,25 @@ function Login() {
 
         if (email && password) {
             console.log(email, password);
-            navigate("/products");
+            axios
+                .post("http://localhost:8080/api/auth/signin", {
+                    username: email,
+                    password: password,
+                })
+                .then(function (response) {
+                    console.log(response.data.token);
+                    setToken(response.data.token);
+                    navigate("/products");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     };
+
+    if (authToken) {
+        navigate("/products");
+    }
 
     return (
         <>

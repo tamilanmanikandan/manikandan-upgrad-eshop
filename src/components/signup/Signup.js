@@ -1,8 +1,9 @@
 import { Avatar, Button, TextField, Typography } from "@mui/material";
 import NavigationBar from "../navigation/NavigationBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import LockIcon from "@mui/icons-material/Lock";
+import axios from "axios";
 
 function Signup() {
     const [firstName, setFirstName] = useState("");
@@ -17,6 +18,7 @@ function Signup() {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [contactNumberError, setContactNumberError] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -43,8 +45,23 @@ function Signup() {
             setContactNumberError(true);
         }
 
-        if (firstName && lastName && email && password) {
+        if (firstName && lastName && email && password && contactNumber) {
             console.log(firstName, lastName, email, password);
+            axios
+                .post("http://localhost:8080/api/auth/signup", {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    contactNumber: contactNumber,
+                })
+                .then(function (response) {
+                    console.log(response.data);
+                    navigate("/login");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     };
 
