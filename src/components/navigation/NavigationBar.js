@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -7,14 +7,20 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../search/SearchInput";
+import { AuthContext } from "../../common/AuthContext";
 
 function NavigationBar(props) {
   const { isLogged, isAdmin, searchTerm, onSearchChange } = props;
   const navigate = useNavigate();
+  const { setToken, setUserId, setIsAdmin } = useContext(AuthContext);
 
   const handleLogout = () => {
+    setToken(null);
+    setUserId(null);
+    setIsAdmin(false);
     navigate("/login");
   };
+
   return (
     <AppBar position="static" className="app-primary-color">
       <Toolbar>

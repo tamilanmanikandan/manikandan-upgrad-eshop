@@ -10,13 +10,12 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useNavigate } from "react-router-dom";
 
 function ProductCard(props) {
-    const { productData } = props;
-    const navigate = useNavigate();
+    const { key, productData, isAdmin, handleDeleteCall, navigate } = props;
+
     return (
-        <Grid item xs={4}>
+        <Grid key={key} item xs={4}>
             <Card>
                 <CardMedia
                     sx={{ height: 150 }}
@@ -45,7 +44,7 @@ function ProductCard(props) {
                     sx={{
                         alignSelf: "stretch",
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: isAdmin ? "space-between" : "flex-start",
                         margin: "0 10px",
                     }}
                 >
@@ -58,14 +57,18 @@ function ProductCard(props) {
                             Buy
                         </Button>
                     </div>
-                    <div>
-                        <IconButton>
-                            <DeleteIcon />
-                        </IconButton>
-                        <IconButton>
-                            <EditIcon />
-                        </IconButton>
-                    </div>
+                    {isAdmin && (
+                        <div>
+                            <IconButton onClick={handleDeleteCall}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                                onClick={() => navigate(`/edit-product/${productData.id}`)}
+                            >
+                                <EditIcon />
+                            </IconButton>
+                        </div>
+                    )}
                 </CardActions>
             </Card>
         </Grid>
