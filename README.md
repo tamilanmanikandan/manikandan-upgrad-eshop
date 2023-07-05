@@ -14,57 +14,78 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+## Backend application
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. React app uses the ecommerce-upgrad-master backend application for API/Data requirements.
+2. Note: Updated AuthController's sign-in method to return user token, role and id details that are used by the API.
+3. The backend app would run at http://localhost:8080.
 
-### `npm run build`
+## Demo video
+https://drive.google.com/file/d/1Zn8RJMymwfzLWtSpJuLmURiyCH6XXM2w/view?usp=drive_link
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ScreenShots
+Login : 
+![Alt text](0_login_screen.png) 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Signup Form :
+![Alt text](1_signup_screen.png) 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Signup Success :
+![Alt text](2_signup_success.png) 
 
-### `npm run eject`
+Home Screen :
+![Alt text](3_home_screen.png) 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Products for Home Decoration Category :
+![Alt text](4_home_decoration_category.png) 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Sort High to Low :
+![Alt text](5_sort_high_to_low.png) 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Sort Low to High : 
+![Alt text](6_sort_low_to_high.png) 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Sort Newest : 
+![Alt text](7_sort_newest.png) 
 
-## Learn More
+Product List Based on Search terms :
+![Alt text](8_product_showing_basedon_search_terms.png) 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Alt text](9_show_the_item_with_matching_text.png) 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Product Detail Screen :
+![Alt text](10_product_detail_screen.png) 
 
-### Code Splitting
+Order Selector 1 :
+![Alt text](11_order_selector_screen1.png) 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Order Selector 2 and Address not selection : 
+![Alt text](12_address_not_selection_error.png) 
 
-### Analyzing the Bundle Size
+Address adding Form : 
+![Alt text](13_address_add_screen.png) 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Address added Successfully : 
+![Alt text](14_address_added_successfully.png) 
 
-### Making a Progressive Web App
+Address Selection Screen :
+![Alt text](13_1_address_selection_screen.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Order Confirm Screen :
+![Alt text](15_confirm_order.png) 
+![Alt text](16_order_placed_successfully.png) 
 
-### Advanced Configuration
+Add Product Screen :
+![Alt text](17_add_product_screen.png) 
+![Alt text](18_add_product_success.png) 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Sort Newest after adding new product : 
+![Alt text](19_sort_newest_after_adding_product.png) 
 
-### Deployment
+Edit Product Screen : 
+![Alt text](20_edit_product_screen.png) 
+![Alt text](21_edit_product_success.png) 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Delete Product screen : 
+![Alt text](22_delete_product_confirmation.png)
+![Alt text](23_delete_product_success.png)
