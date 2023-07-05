@@ -9,6 +9,12 @@ import {
     ToggleButton,
     ToggleButtonGroup,
     Typography,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Button
 } from "@mui/material";
 import ProductCard from "./ProductCard";
 import axios from "axios";
@@ -26,6 +32,8 @@ function ProductsContainer() {
     const navigate = useNavigate();
     const [originalData, setOriginalData] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
+    const [dlgOpen, setDlgOpen] = useState(false);
+    const [item, setItem] = useState();
 
 
     const triggerDataFetch = () => {
@@ -97,15 +105,22 @@ function ProductsContainer() {
         setSearchTerm(event.target.value);
     };
 
-    const handleDeleteCall = (id) => {
-        if (window.confirm("Are you sure you want to delete the product?")) {
+    const handleClose = () => {
+    };
+
+    let handleCloseDlg = (userChoice) => {
+        setDlgOpen(false)
+        if (userChoice) {
+            console.log('confirmed deletion');
             axios
-                .delete(`http://localhost:8080/api/products/${id}`, {
+                .delete(`http://localhost:8080/api/products/${item.id}`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                     },
                 })
                 .then(function () {
+                    setItem()
+                    showToast(`Product ${item.name} deleted successfully!`, ToastTypes.SUCCESS)
                     triggerDataFetch();
                 })
                 .catch(function () {
@@ -114,6 +129,14 @@ function ProductsContainer() {
                     );
                 });
         }
+        else {
+            console.log('declined deletion');
+        }
+    }
+
+    const handleDeleteCall = (item) => {
+        setItem(item)
+        setDlgOpen(true)
     };
 
     return (
@@ -124,7 +147,25 @@ function ProductsContainer() {
                 onSearchChange={handleSearchChange}
                 isAdmin={isAdmin}
             />
-
+            <Dialog
+                open={dlgOpen}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Confirm deletion of product!"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Are you sure you want to delete the product?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => handleCloseDlg(false)}>Cancel</Button>
+                    <Button onClick={() => handleCloseDlg(true)} autoFocus> Confirm </Button>
+                </DialogActions>
+            </Dialog>
             {originalData.length > 0 ? (
                 <div className="productsContainer">
                     <div className="categorySectionStyle">
@@ -169,7 +210,7 @@ function ProductsContainer() {
                                 key={item.id}
                                 productData={item}
                                 isAdmin={isAdmin}
-                                handleDeleteCall={() => handleDeleteCall(item.id)}
+                                handleDeleteCall={() => handleDeleteCall(item)}
                                 navigate={navigate}
                             />
                         ))}
