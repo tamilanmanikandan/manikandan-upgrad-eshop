@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import "./Products.css"
+import { showToast, ToastTypes } from "../../common/ToastUtils";
 
 function ProductDetail() {
     const { authToken, isAdmin } = useContext(AuthContext);
@@ -33,7 +34,7 @@ function ProductDetail() {
                     setCategoryList(response.data);
                 })
                 .catch(function () {
-                    alert("Error: There was an issue in retrieving categories list.");
+                    showToast("There was an issue in retrieving categories list.", ToastTypes.ERROR)
                 });
             axios
                 .get(`http://localhost:8080/api/products/${id}`, {
@@ -44,7 +45,7 @@ function ProductDetail() {
                 .then((response) => {
                     setProduct(response.data);
                 })
-                .catch(() => alert("Error: There was an issue in fetching the product details."));
+                .catch(() => showToast("There was an issue in fetching the product details.", ToastTypes.ERROR));
         } else {
             navigate("/login");
         }

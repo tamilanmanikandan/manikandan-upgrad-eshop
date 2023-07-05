@@ -12,6 +12,7 @@ import {
     Typography,
 } from "@mui/material";
 import "./Products.css"
+import { showToast, ToastTypes } from "../../common/ToastUtils";
 
 function AddEditProduct() {
     const { authToken, isAdmin } = useContext(AuthContext);
@@ -45,7 +46,7 @@ function AddEditProduct() {
                 setCategoryList(response.data);
             })
             .catch(function (error) {
-                alert("Error: There was an issue in retrieving categories list.");
+                showToast("There was an issue in retrieving categories list.", ToastTypes.ERROR)
             });
     }, []);
 
@@ -70,7 +71,7 @@ function AddEditProduct() {
                     setProductDescription(data.description);
                 })
                 .catch(() =>
-                    alert("Error: There was an issue in retrieving product details.")
+                    showToast("There was an issue in retrieving product details.", ToastTypes.ERROR)
                 )
                 .finally(() => setDataLoading(false));
         }
@@ -118,11 +119,11 @@ function AddEditProduct() {
                         }
                     )
                     .then(function () {
-                        alert(`Product ${name} modified successfully!`);
+                        showToast(`Product ${name} modified successfully!`, ToastTypes.SUCCESS)
                         navigate("/products");
                     })
                     .catch(function () {
-                        alert(`Error: There was an issue is modifying product ${name}.`);
+                        showToast(`There was an issue is modifying product ${name}.`, ToastTypes.ERROR)
                     });
             } else {
                 axios
@@ -144,11 +145,11 @@ function AddEditProduct() {
                         }
                     )
                     .then(function () {
-                        alert(`Product ${name} added successfully!`);
+                        showToast(`Product ${name} added successfully!`, ToastTypes.SUCCESS)
                         navigate("/products");
                     })
                     .catch(function () {
-                        alert(`Error: There was an issue in adding product: ${name}.`);
+                        showToast(`Error: There was an issue in adding product: ${name}.`, ToastTypes.ERROR)
                     });
             }
         }

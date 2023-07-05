@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../common/AuthContext";
 import "./Login.css";
+import { showToast, ToastTypes } from "../../common/ToastUtils";
 
 function Login() {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ function Login() {
                     navigate("/products");
                 })
                 .catch(function () {
-                    alert("Error: Invalid credentials.");
+                    showToast("Invalid credentials", ToastTypes.ERROR);
                 });
         }
     };
@@ -63,7 +64,7 @@ function Login() {
             <NavigationBar />
             <div className="loginContainer">
                 <form autoComplete="off" onSubmit={handleSubmit}>
-                    <Avatar className="avatarStyle">
+                    <Avatar className="avatarStyleLogin">
                         <LockIcon />
                     </Avatar>
                     <Typography gutterBottom variant="h5" component="p">
@@ -99,11 +100,15 @@ function Login() {
                     >
                         Sign In
                     </Button>
+                    <div className="signupLink">
+                        <Link to="/signup">Don't have an account? Sign Up</Link>
+                    </div>
                 </form>
+                <div className="loginFooter">
+                    Copyright &copy; <a href="https://upgrad.com/">upGrad</a> 2023
+                </div>
             </div>
-            <div className="loginFooter">
-                Copyright &copy; <Link href="https://www.upgrad.com/">upGrad</Link> 2023
-            </div>
+
         </>
     );
 }

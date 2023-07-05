@@ -11,11 +11,11 @@ import {
     Typography,
 } from "@mui/material";
 import ProductCard from "./ProductCard";
-import { itemsList } from "../../common/mock";
 import axios from "axios";
 import { AuthContext } from "../../common/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./Products.css"
+import { showToast, ToastTypes } from "../../common/ToastUtils";
 
 function ProductsContainer() {
     const [category, setCategory] = useState("all");
@@ -40,7 +40,7 @@ function ProductsContainer() {
                     setCategoryList(response.data);
                 })
                 .catch(function () {
-                    alert("Error: There was an issue in retrieving categories list.");
+                    showToast("There was an issue in retrieving categories list.", ToastTypes.ERROR);
                 });
             axios
                 .get("http://localhost:8080/api/products", {
@@ -70,16 +70,17 @@ function ProductsContainer() {
                 ? originalData
                 : originalData.filter((item) => item.category === newCategory);
         setCategory(newCategory);
+        setSortBy("default");
         setData(newData);
     };
 
     const handleSortChange = (event) => {
         const keyString = event.target.value;
-        const temp = [...originalData];
+        const temp = [...data];
         if (keyString !== "default") {
             setData(
                 temp.sort((a, b) =>
-                    keyString === "lth" ? a.price - b.price : b.price - a.price
+                    keyString === "new" ? b.id.localeCompare(a.id) : keyString === "lth" ? a.price - b.price : b.price - a.price
                 )
             );
         } else {
@@ -108,8 +109,8 @@ function ProductsContainer() {
                     triggerDataFetch();
                 })
                 .catch(function () {
-                    alert(
-                        `Error: There was an issue in deleting product, please try again later.`
+                    showToast(
+                        `There was an issue in deleting product, please try again later.`, ToastTypes.ERROR
                     );
                 });
         }
@@ -157,6 +158,7 @@ function ProductsContainer() {
                                 <MenuItem value={"default"}>Default</MenuItem>
                                 <MenuItem value={"htl"}>Price: High to Low</MenuItem>
                                 <MenuItem value={"lth"}>Price: Low to High</MenuItem>
+                                <MenuItem value={"new"}>Newest</MenuItem>
                             </Select>
                         </FormControl>
                     </div>

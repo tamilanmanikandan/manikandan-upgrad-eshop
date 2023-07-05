@@ -6,11 +6,17 @@
     text-align: center;
 }
 
-.avatarStyle {
+.avatarStyleLogin {
     background-color: deeppink !important;
     margin: 10px auto;
 }
 
 .loginFooter {
     text-align: center;
+    margin-top: 100px;
+}
+
+.signupLink {
+    text-align: left;
+    margin: 10px 0;
 }

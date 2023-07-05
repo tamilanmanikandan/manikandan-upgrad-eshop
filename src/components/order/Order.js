@@ -14,6 +14,7 @@ import {
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Order.css";
+import { showToast, ToastTypes } from "../../common/ToastUtils";
 
 const steps = ["Items", "Select Address", "Confirm Order"];
 
@@ -60,13 +61,13 @@ function Order() {
                 )
                 .then((response) => {
                     console.log(response.data);
-                    alert("Order placed successfully");
+                    showToast("Order placed successfully", ToastTypes.SUCCESS)
                     navigate("/products");
                 })
                 .catch((error) => console.error("Error placing order:", error));
         } else {
             if (activeStep === 1 && currentAddress === undefined) {
-                alert("Please select an address!");
+                showToast("Please select an address!", ToastTypes.ERROR)
             } else {
                 setActiveStep((prevActiveStep) => prevActiveStep + 1);
             }
@@ -113,7 +114,7 @@ function Order() {
                 city: city,
                 state: stateName,
                 landmark: landmark,
-                zipCode: zipCode,
+                zipcode: zipCode,
                 user: userId
             };
             axios
@@ -123,7 +124,7 @@ function Order() {
                     },
                 })
                 .then(() => {
-                    alert("Success: Address is successfully saved.");
+                    showToast("Address is successfully saved", ToastTypes.SUCCESS)
                     axios
                         .get(`http://localhost:8080/api/addresses`, {
                             headers: {
@@ -136,9 +137,7 @@ function Order() {
                         .catch((error) => console.error("Error fetching data:", error));
                 })
                 .catch(() =>
-                    alert(
-                        "Error: There was an issue in saving the address. Please provide correct details."
-                    )
+                    showToast("There was an issue in saving the address. Please provide correct details.", ToastTypes.ERROR)
                 );
         }
     };

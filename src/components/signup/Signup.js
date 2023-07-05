@@ -5,6 +5,7 @@ import { useState } from "react";
 import LockIcon from "@mui/icons-material/Lock";
 import axios from "axios";
 import "./Signup.css"
+import { ToastTypes, showToast } from "../../common/ToastUtils";
 
 function Signup() {
     const [firstName, setFirstName] = useState("");
@@ -57,12 +58,12 @@ function Signup() {
                     contactNumber: contactNumber,
                 })
                 .then(function (response) {
-                    alert(response.data.message);
+                    showToast(response.data.message, ToastTypes.SUCCESS);
                     navigate("/login");
                 })
                 .catch(function (error) {
-                    alert(
-                        "Error: There was an issue in registering the user, please try again later."
+                    showToast(
+                        "There was an issue in registering the user, please try again later.", ToastTypes.ERROR
                     );
                 });
         }
@@ -158,10 +159,11 @@ function Signup() {
                         <Link to="/login">Already have an account? Sign in</Link>
                     </div>
                 </form>
+                <div className="signupFooter">
+                    Copyright &copy; <a href="https://www.upgrad.com/">upGrad</a> 2023
+                </div>
             </div>
-            <div className="signupFooter">
-                Copyright &copy; <Link href="https://www.upgrad.com/">upGrad</Link> 2023
-            </div>
+
         </>
     );
 }

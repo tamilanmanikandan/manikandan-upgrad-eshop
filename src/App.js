@@ -7,6 +7,7 @@ import { AuthContextProvider } from "./common/AuthContext";
 import ProductDetail from "./components/products/ProductDetails";
 import Order from "./components/order/Order";
 import AddEditProduct from "./components/products/AddEditProduct";
+import { ToastContainer } from 'react-toastify';
 
 const appTheme = createTheme({
   palette: {
@@ -24,6 +25,7 @@ function App() {
     <AuthContextProvider>
       <ThemeProvider theme={appTheme}>
         <BrowserRouter>
+          <ToastContainer />
           <Routes>
             <Route exact path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
